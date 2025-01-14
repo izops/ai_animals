@@ -54,7 +54,6 @@ def download_images(urls: fca.L, path: str, keyword: str) -> None:
         # Create file name
         file_name = os.path.join(
             destination,
-            keyword,
             keyword + str(i) + '.jpg'
         )
 
@@ -71,7 +70,33 @@ def download_images(urls: fca.L, path: str, keyword: str) -> None:
             time.sleep(1)
             pass
 
+def batch_download(keywords: list, path: str) -> None:
+    """Set up image search and download for all provided keywords.
+    
+    Inputs:
+        - keywords - list of all keywords to be sought and downloaded as image
+        - path - folder path where all downloaded data should be stored
+
+    Outputs:
+        - the method does not return any object but it saves physical copies
+        of found images of the keywords in data folder
+    """
+
+    for keyword in keywords:
+        # Find images and save the urls
+        urls = search_images(keyword)
+
+        # Download the images to the disk
+        download_images(urls, path, keyword)
+
 #%%
-keyword = 'horse'
-urls = search_images(keyword)
-download_images(urls, path, keyword)
+
+# Define list of animals to download images of
+keywords = [
+    'horse', 'pig', 'domestic duck', 'hen', 'rooster', 'cat',
+    'dog', 'goose', 'goat', 'sheep', 'turkey', 'cow', 'bull',
+    'dove', 'pigeon', 'duckling', 'donkey', 'rabbit'
+]
+
+# Bulk download the data
+batch_download(keywords, path)
