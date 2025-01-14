@@ -52,7 +52,11 @@ def download_images(urls: fca.L, path: str, keyword: str) -> None:
 
     for i, url in enumerate(urls):
         # Create file name
-        file_name = os.path.join(destination, keyword + str(i) + '.jpg')
+        file_name = os.path.join(
+            destination,
+            keyword,
+            keyword + str(i) + '.jpg'
+        )
 
         print(file_name)
 
