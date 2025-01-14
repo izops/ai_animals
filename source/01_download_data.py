@@ -13,7 +13,7 @@ path = '/data'
 # %%
 # Define functions
 
-def search_images(keywords, max_images = 30):
+def search_images(keywords: str) -> fca.L:
     """Look for images on web using duckduckgo search.
     
     Inputs:
@@ -21,7 +21,7 @@ def search_images(keywords, max_images = 30):
         - max_images - integer number of images to look for
 
     Output:
-        - list of
+        - list of urls with the search results
     """
     # Inform user about the process start
     print(f"Searching for {keywords}")
