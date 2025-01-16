@@ -146,8 +146,9 @@ def resize_images(
 
 # Define list of animals to download images of
 keywords = [
-    'horse', 'pig', 'domestic duck', 'hen', 'rooster', 'cat',
-    'dog', 'goose', 'goat', 'sheep', 'turkey', 'cow', 'bull',
+    # 'horse', 'pig', 'domestic duck', 'hen', 'rooster', 'cat',
+    # 'dog', 'goose', 'goat', 'sheep',
+    'turkey', 'cow', 'bull',
     'dove', 'pigeon', 'duckling', 'donkey', 'rabbit'
 ]
 
@@ -162,3 +163,6 @@ subfolders = os.listdir(path)
 for subfolder in subfolders:
     # Create subfolder path
     sub_path = os.path.join(path, subfolder)
+
+    # Resize images or remove corrupt ones in every subfolder
+    resize_images(subfolder, subfolder)
