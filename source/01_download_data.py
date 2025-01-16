@@ -28,7 +28,7 @@ def search_images(keywords: str) -> fca.L:
     print(f"Searching for {keywords}")
 
     # Return the list of URLs with the search results
-    return fca.L(DDGS().images(keywords)).itemgot('image')
+    return fca.L(DDGS().images(keywords + ' animal')).itemgot('image')
 
 def download_images(urls: fca.L, path: str, keyword: str) -> None:
     """Download images from url to a set path.
