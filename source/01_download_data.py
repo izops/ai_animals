@@ -67,8 +67,11 @@ def download_images(urls: fca.L, path: str, keyword: str) -> None:
                 show_progress=False
             )
         except:
-            time.sleep(1)
+            time.sleep(0.1)
             pass
+
+        # Resize images in the folder
+        fva.resize_images(destination, max_size=400, dest=destination)
 
 def batch_download(keywords: list, path: str) -> None:
     """Set up image search and download for all provided keywords.
