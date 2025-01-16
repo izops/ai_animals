@@ -146,10 +146,9 @@ def resize_images(
 
 # Define list of animals to download images of
 keywords = [
-    # 'horse', 'pig', 'domestic duck', 'hen', 'rooster', 'cat',
-    # 'dog', 'goose', 'goat', 'sheep',
-    'turkey', 'cow', 'bull',
-    'dove', 'pigeon', 'duckling', 'donkey', 'rabbit'
+    'horse', 'pig', 'domestic duck', 'hen', 'rooster', 'cat',
+    'dog', 'goose', 'goat', 'sheep', 'turkey', 'cow', 'bull',
+    'dove', 'pigeon','duckling', 'donkey', 'rabbit'
 ]
 
 # Bulk download the data
