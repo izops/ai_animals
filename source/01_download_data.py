@@ -100,3 +100,19 @@ keywords = [
 
 # Bulk download the data
 batch_download(keywords, path)
+
+# %%
+
+# Get all subdirectories for clean up
+subfolders = os.listdir(path)
+
+for subfolder in subfolders:
+    # Create subfolder path
+    sub_path = os.path.join(path, subfolder)
+
+    # Find and remove corrupt image files
+    corrupt_images = fva.verify_images(fva.get_image_files(sub_path))
+    corrupt_images.map(fva.Path.unlink)
+
+    # Infrom about the result
+    print(f'There were {len(corrupt_images)} corrupt images removed from {subfolder}.')
