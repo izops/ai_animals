@@ -3,6 +3,7 @@ import os
 import time
 import fastcore.all as fca
 import fastai.vision.all as fva
+from PIL import Image
 
 from fastdownload import download_url
 from duckduckgo_search import DDGS
@@ -91,6 +92,56 @@ def batch_download(keywords: list, path: str) -> None:
         # Add waiting time
         time.sleep(3)
 
+def resize_images(
+    input_folder: str,
+    output_folder: str,
+    size=(400, 400)
+) -> None:
+    """Resize jpeg images in the input directory to the required size.
+    The images are resized keeping their original aspect ratio. The extra space
+    needed to fill the required size is padded with black pixels.
+
+    Inputs:
+        - input_folder - string containing path to the folder with images to
+        resize
+        - output_folder - string with target path where the resized images will
+        be saved
+        - size - tuple containing the required target size of images
+
+    Outputs:
+        - no returns, the resized images are saved in the output folder
+    """
+    # Create output folder if needed
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
+    # Resize all jpeg images in the source directory, remove corrupt files
+    for filename in os.listdir(input_folder):
+        if filename.endswith('.jpg') or filename.endswith('.jpeg'):
+            # Obtain the full file name with path
+            img_path = os.path.join(input_folder, filename)
+            
+            try:
+                # Open the image, this will only work with valid files
+                img = Image.open(img_path)
+
+                # Resize and pad to make it square
+                old_size = img.size
+                ratio = float(size[0]) / max(old_size)
+                new_size = tuple([int(x * ratio) for x in old_size])
+                img = img.resize(new_size, Image.LANCZOS)  # Updated here
+
+                # Create a new image and paste the resized image onto it
+                new_img = Image.new("RGB", size)
+                new_img.paste(img, ((size[0] - new_size[0]) // 2,
+                                    (size[1] - new_size[1]) // 2))
+
+                # Save the resized image
+                new_img.save(os.path.join(output_folder, filename))
+
+            except:
+                # There was an error opening image, remove it
+                os.remove(img_path)
 #%%
 
 # Define list of animals to download images of
@@ -111,10 +162,3 @@ subfolders = os.listdir(path)
 for subfolder in subfolders:
     # Create subfolder path
     sub_path = os.path.join(path, subfolder)
-
-    # Find and remove corrupt image files
-    corrupt_images = fva.verify_images(fva.get_image_files(sub_path))
-    corrupt_images.map(fva.Path.unlink)
-
-    # Infrom about the result
-    print(f'There were {len(corrupt_images)} corrupt images removed from {subfolder}.')
