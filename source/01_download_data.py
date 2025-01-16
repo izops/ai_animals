@@ -41,12 +41,11 @@ def download_images(urls: fca.L, path: str, keyword: str) -> None:
         - none
     """
 
-    # Create data folder if needed
-    if os.path.exists(os.path.join(path, keyword)):
-        destination = path
-    else:
-        destination = os.path.join(path, keyword)
+    # Define target folder
+    destination = os.path.join(path, keyword)
 
+    # Create data folder if needed
+    if not os.path.exists(destination):
         # Create new directory
         os.mkdir(destination)
 
@@ -67,11 +66,8 @@ def download_images(urls: fca.L, path: str, keyword: str) -> None:
                 show_progress=False
             )
         except:
-            time.sleep(0.1)
+            time.sleep(1)
             pass
-
-        # Resize images in the folder
-        fva.resize_images(destination, max_size=400, dest=destination)
 
 def batch_download(keywords: list, path: str) -> None:
     """Set up image search and download for all provided keywords.
@@ -91,6 +87,9 @@ def batch_download(keywords: list, path: str) -> None:
 
         # Download the images to the disk
         download_images(urls, path, keyword)
+
+        # Add waiting time
+        time.sleep(3)
 
 #%%
 
