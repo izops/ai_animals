@@ -164,4 +164,4 @@ for subfolder in subfolders:
     sub_path = os.path.join(path, subfolder)
 
     # Resize images or remove corrupt ones in every subfolder
-    resize_images(subfolder, subfolder)
+    resize_images(sub_path, sub_path)
